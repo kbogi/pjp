@@ -12,6 +12,12 @@ def is_convex(a, b, c, d):
         return False
     if  c == d:
         return False
+
+    pts = (a,b,c,d)
+    for i in range(0,len(pts)):
+        for j in range(len(pts)-i-1,len(pts)):
+            if pts[i]==pts[j]:
+                return False
     p0 = get_line(a,c)
     p1 = get_line(b,d)
     try:
