@@ -35,11 +35,11 @@ def merge_tuples(line_a, line_b, line_c):
     loc = locals()
     sl = {}
     
-    index = 0
+    index = len(loc)-1
     for key, val in loc.items():
         for node in val:
             add(sl, node[0], node[1], index)
-        index += 1
+        index -= 1
     return sl
 
     
@@ -48,4 +48,4 @@ def add(sl, id, val, index):
         sl[id] = [0,0,0]
         
     sl[id][index] = val;
-    
+

@@ -12,24 +12,19 @@ PyTest si sám najde testy a postará se o jejich provedení.
 PyTest si můžete nainstalovat přes pip a je také součástí distribuce Anaconda
 """
 
-def merge_tuples(line_a, line_b, line_c):
+def test_merge_tuples():
     """
-    funkce merge tuples - spojujici sekvence
+    test pro vyslednou funkci merge tuples
     """
-    loc = locals()
-    sl = {}
-    
-    index = len(loc)-1
-    for key, val in loc.items():
-        for node in val:
-            add(sl, node[0], node[1], index)
-        index -= 1
-    return sl
+    line_a = ((1, 3), (3, 4), (10, 2))
+    line_b = ((1, 2), (2, 4), (5, 2))
+    line_c = ((1, 5), (3, 2), (7, 3))
 
-    
-def add(sl, id, val, index):
-    if not( id in sl):
-        sl[id] = [0,0,0]
-        
-    sl[id][index] = val;
+    expected_result = {1: [3, 2, 5],
+                       2: [0, 4, 0],
+                       3: [4, 0, 2],
+                       5: [0, 2, 0],
+                       7: [0, 0, 3],
+                       10: [2, 0, 0]}
 
+    assert expected_result == merger.merge_tuples(line_a, line_b, line_c)
