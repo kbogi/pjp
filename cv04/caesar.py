@@ -14,9 +14,9 @@ def encrypt(word, offset):
     offset %= 26
     abc='abcdefghijklmnopqrstuvwxyz'
     ABC='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    all = abc+ABC
+    allN = abc+ABC
     allOff = abc[offset:] + abc[:offset] + ABC[offset:] + ABC[:offset]
-    return word.translate(word.maketrans(all, allOff))
+    return word.translate(word.maketrans(allN, allOff))
 
 
 def decrypt(word, offset):
