@@ -10,13 +10,13 @@ def encrypt(word, offset):
     :param offset - znakovy posun
     :return: zasifrovane slovo
     """
-    
+
     offset %= 26
-    abc='abcdefghijklmnopqrstuvwxyz'
-    ABC='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    allN = abc+ABC
-    allOff = abc[offset:] + abc[:offset] + ABC[offset:] + ABC[:offset]
-    return word.translate(word.maketrans(allN, allOff))
+    abec = 'abcdefghijklmnopqrstuvwxyz'
+    abec_v = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    all_n = abec+abec_v 
+    all_off = abec[offset:] + abec[:offset] + abec_v[offset:] + abec_v [:offset]
+    return word.translate(word.maketrans(all_n, all_off))
 
 
 def decrypt(word, offset):
