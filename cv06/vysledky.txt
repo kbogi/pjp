@@ -1,0 +1,12 @@
+ vysledky 
+
+ soubor small.txt
+
+ ne
+ ano
+ ne
+
+ soubor large.txt
+
+ ano
+ ne
