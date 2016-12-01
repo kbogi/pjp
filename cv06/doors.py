@@ -29,18 +29,53 @@ def is_key(words):
     """
     resi podminku z pole slov
     """
+    begl = []
+    def add(word):
+        f = word[0]
+        l = word[-1]
+        add = True
+        for n in begl:
+            if n[0]==f:
+                n[1] += 1
+                add = False
+        if add:
+            begl.append([f, 1])
+        add = True
+        for n in begl:
+            if n[0]==l:
+                n[1] -= 1
+                add = False
+        if add:
+            begl.append([l, -1])
+            
+    
+    for word in words:
+        add(word)
+    sumb = 0
+    sume = 0
+    
+    
+    for n in begl:
+        if n[1] > 1 or n[1] < -1:
+            return False
+        if n[1] > 0:
+            sumb += n[1]
+        if n[1] < 0:
+            sume -= n[1]
+    if(sumb > 1 or sume > 1):
+        return False
     for word in words:
         words.remove(word)
         words.insert(0, word)
-        if solve_key(words[:]) == True:
+        if solve_key(words) == True:
             return True
     return False
     
-def run(file):
+def run(fi):
     """
     nacte soubor doors.txt a vypise poporade spravnost klicu do konzole
     """
-    f = open(file)
+    f = open(fi)
     def readint():
         """
         precte integer ze vstupu
@@ -63,3 +98,7 @@ def run(file):
             num_of_words -= 1
         print(is_key(word_list))
         num_of_keys -= 1
+if __name__ == "__main__":
+
+    run("small.txt")
+    run("large.txt")
