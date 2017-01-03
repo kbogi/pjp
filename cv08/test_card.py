@@ -64,7 +64,7 @@ class TestCard(TestCase):
         test suit
         :return:
         """
-        result = 'piky'
+        result = 'p'
         self.assertEqual(Card(5, 'piky').suit(), result)
 
     def test_black_jack_rank(self):
@@ -88,3 +88,8 @@ class TestCard(TestCase):
         self.assertTrue(Card(5, 'piky') <= Card(9, 'piky'))
         self.assertTrue(Card(12, 'piky') <= Card(10, 'piky'))
         self.assertFalse(Card(10, 'piky') <= Card(7, 'piky'))
+
+    def test_str(self):
+        """test toString"""
+        result = 'eso piky'
+        self.assertEqual(format(Card(1, 'piky')), result)

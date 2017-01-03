@@ -34,11 +34,13 @@ class Card(object):
 
     def suit(self):
         """ vraci suit """
-        return self.s
+        return self.s[0]
 
     def black_jack_rank(self):
         """ vraci BJ rank"""
         return self.black_jack_ranks[self.r][0]
+    def __str__(self):
+        return self.black_jack_ranks[self.r][1] + ' ' + self.s
 
     def __lt__(self, other):
         return self.black_jack_rank() < other.black_jack_rank()
