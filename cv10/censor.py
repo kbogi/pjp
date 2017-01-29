@@ -15,13 +15,18 @@ import argparse
 """
 
 
-
-
-
 def strip_html(text):
     html_tag = re.compile('<[^>]*>')
     mezery = re.compile('\s+')
-    return re.sub(mezery, ' ', re.sub(html_tag, ' ', text))
+    new_line = re.compile(r'\n')
+
+    def check_newline(match):
+        if new_line.search(match.group()):
+            return '\n'
+        return ' '
+    text = re.sub(html_tag, ' ', text)
+    text = re.sub(r'(^\s+)|(\s+$)', '', text)
+    return re.sub(mezery, check_newline, text)
 
 
 def load_list(soubor):
@@ -32,6 +37,7 @@ def load_list(soubor):
     data.close()
     return words
 
+
 def replace_words(text, words):
     def replace_word(to_check):
         for word in words:
@@ -41,7 +47,9 @@ def replace_words(text, words):
                     repl += '#'
                 return repl
         return to_check.group()
+
     return re.sub(r'[\w-]+', replace_word, text)
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

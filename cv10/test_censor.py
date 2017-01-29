@@ -6,7 +6,7 @@
 import censor, os
 def test_strip_html():
     arg = '<html> <h1>vypadam uplne jako html stranka</h1><br><p>fakt ze jo</p></html>'
-    result = ' vypadam uplne jako html stranka fakt ze jo '
+    result = 'vypadam uplne jako html stranka fakt ze jo'
     huu = censor.strip_html(arg)
     assert result == huu
 
