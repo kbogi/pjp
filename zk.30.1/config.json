@@ -1,0 +1,7 @@
+{
+    "target": "remote",
+    "branch": "master",
+    "url": "http://www.nti.tul.cz/~vrany/pjp/data_vety.html",
+    "scrap": "True",
+    "rows": 60493
+}
