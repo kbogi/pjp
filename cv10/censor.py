@@ -44,6 +44,8 @@ def replace_words(text, words):
             if to_check.group() == word:
                 repl = ''
                 for ch in word:
+                    if ch:
+                        pass
                     repl += '#'
                 return repl
         return to_check.group()
@@ -52,23 +54,23 @@ def replace_words(text, words):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-i", "--input", help=Strings.HELP_TEXTS['i'])
-    parser.add_argument("-l", "--list", help=Strings.HELP_TEXTS['l'])
-    parser.add_argument("-c", "--clean", action='store_true', help=Strings.HELP_TEXTS['c'])
-    parser.add_argument("-o", "--output", help=Strings.HELP_TEXTS['o'])
-    args = parser.parse_args()
-    words = []
-    if args.list is not None:
-        words = load_list(args.list)
-    if args.output is not None:
-        out = FileOutput(args.output)
+    PARSER = argparse.ArgumentParser()
+    PARSER.add_argument("-i", "--input", help=Strings.HELP_TEXTS['i'])
+    PARSER.add_argument("-l", "--list", help=Strings.HELP_TEXTS['l'])
+    PARSER.add_argument("-c", "--clean", action='store_true', help=Strings.HELP_TEXTS['c'])
+    PARSER.add_argument("-o", "--output", help=Strings.HELP_TEXTS['o'])
+    ARGS = PARSER.parse_args()
+    WORDS = []
+    if ARGS.list is not None:
+        WORDS = load_list(ARGS.list)
+    if ARGS.output is not None:
+        OUT = FileOutput(ARGS.output)
     else:
-        out = ConsoleOutput()
-    if args.input is not None:
-        with open(args.input, 'r', encoding='utf-8') as soubor:
-            text = soubor.read()
-            if args.clean:
-                text = strip_html(text)
-            text = replace_words(text, words)
-            out.write(text)
+        OUT = ConsoleOutput()
+    if ARGS.input is not None:
+        with open(ARGS.input, 'r', encoding='utf-8') as f:
+            TEXT = f.read()
+            if ARGS.clean:
+                TEXT = strip_html(TEXT)
+            TEXT = replace_words(TEXT, WORDS)
+            OUT.write(TEXT)
