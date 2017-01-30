@@ -1,5 +1,5 @@
 """
-https://elearning.tul.cz/mod/quiz/attempt.php?attempt=28569
+Ranking jmen na strance, Zkouska 30.1.
 """
 import json
 import re

@@ -1,6 +1,7 @@
 """testy"""
 import main
 def test_word():
+
     result = 49714
     assert main.Word('COLIN', 938).get_rank() == result
 
