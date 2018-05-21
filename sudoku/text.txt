@@ -1,0 +1,103 @@
+﻿Sudoku
+Zadání
+Ve vaší knize Sudoku problémy řádil šotek, přidal nebo vymazal některá čísla ze zadání. Máte napsat program, který zjistí kolik řešení pro dané zadání existuje a pokud existuje právě jedno, tak ho vypíše.
+Problém řešení sudoku formulujte jako grafovou úlohu (barvení grafu). Navrhněte a implementujte algoritmus, který pro zadané sudoku 9x9 nalezne jedno řešení. Použijte některý aproixmativní algoritmus a doplňte ho o backtracking v případě, že by aproximativní řešení vyžadovalo více než 9 barev.
+Na prvním řádku vstupu je počet zadání N k testování. Následuje N tabulek oddělených prázdným řádkem Jedna tabulka je 9 řádků po devíti cifrách oddělených mezerou. Cifra 0 označuje prázdné pole. Výstupem je pro každou vstupní tabulku počet řešení, pokud má úloha jediné řešení, pak po počtu řešení následuje výpis unikátního řešení ve stejném formátu jako je vstup. Pokud úloha nemá řešení vypíše se počet řešení 0.
+Reprezentace herního plánu
+Herní plánek sudoku bude pri řešení reprezentován jako neorientovaný graf, kde vrcholy budou představoval jednotlivá políčka herního plánu. Samotná čísla bude reprezentovat barva vrcholu. Ke každému vrcholu budou připojeny hranou všechny vrcholy které omezují opakování barev pro jednotlivé řádky, sloupce a skupiny. 
+Reprezentace grafu
+Všechny vrcholy mají dopředu pevně stanovené sousedy, vzhledem k povaze úlohy která vyžaduje časté vyhledávání sousedů, se pro reprezentaci hran hodí seznam sousedů pro každý vrchol. Graf tedy bude reprezentovat seznam vrcholů a seznamy hran pro každý vrchol. Seznam sousedů se vytvoří na začátku programu. Barvy vrcholů budou uloženy jako 2-rozměrné pole celých čísel. Seznam hran jako touple dvouprvkových touplů obsahujících souřadnice sousedního vrcholu na herním plánu.
+Řešení problému
+K vyřešení problému jsem použil aproximativní algoritmus s náhodným pořadím vrcholů a backtrackingem.
+Složitost
+Použitý algoritmus dosahuje paměťové složitosti (M - počet vrcholů, N - počet hran) (N + M^2) a časovou složitostí O(PI(i in range(1, 9), i!)*N) extrémní situace může nastat při velkém množství nevyplněných polí.
+
+
+Pro jednoduchost jsou níže uvedeny barvy přímo číslem, které je použito v sudoku. 
+Algoritmus funguje následujícím způsobem:
+Před započetím barvení se definuje aktuálně "nejnižsí barva", na začátku je rovna "0", tato barva je zde kvuli backtrackingu. Následně se najde první vrchol s neurčenou barvou a přiřadí se mu minimální barva, nevyskytující se u sousedů a vyšší než "nejnižší barva". Následně se zkoumá zda tato nalezená barva má hodnotu nižší nebo rovnou než nejvyšší povolená barva (dle pravidel sudoku). V případě že tato podmínka byla splněna se nalezená barva přiřadí tomuto vrcholu a aktuální pozice a "nejnižší barva" se uloží do zásobníku. V opačném případě se vykoná "návrat", tj. aktuální pozice změní na pozici ze zásobníku a "nejnižší barva" taktéž, s tím že se o jednu zvýší. V případě že jsou všechna pole vyplněna, je nalezeno řešení. To se uloží a inkrementuje se počet řešení. Po nalezení řešení se opět vykoná "návrat". Hledání všech řešení končí po zavolání "návratu" s prázdným zásobníkem. 
+
+C:\Users\krystof\AppData\Local\Programs\Python\Python35-32\python.exe -m cProfile sudoku.py
+
+3
+3 0 6 0 0 2 5 0 0
+0 0 0 0 3 8 0 0 0
+7 0 8 0 1 6 0 9 0
+0 0 7 0 0 3 8 6 0
+8 2 0 0 7 0 0 4 5
+0 6 3 1 0 0 9 0 0
+0 7 0 3 5 0 6 0 2
+0 0 0 8 2 0 0 0 0
+0 0 2 9 0 0 7 0 4
+
+3 0 6 0 0 2 5 0 3
+0 0 0 0 3 8 0 0 0
+7 0 8 0 1 6 0 9 0
+0 0 7 0 0 3 8 6 0
+8 2 0 0 7 0 0 4 5
+0 6 3 1 0 0 9 0 0
+0 7 0 3 5 0 6 0 2
+0 0 0 8 2 0 0 0 0
+0 0 2 9 0 0 7 0 4
+
+3 0 6 0 0 2 0 0 0
+0 0 0 0 3 8 0 0 0
+7 0 8 0 1 6 0 9 0
+0 0 7 0 0 3 8 6 0
+8 2 0 0 7 0 0 4 5
+0 6 3 1 0 0 9 0 0
+0 7 0 3 5 0 6 0 2
+0 0 0 8 2 0 0 0 0
+0 0 2 9 0 0 7 0 4
+
+
+5
+0 0 0 6 0 0 2 0 0
+5 0 4 0 3 0 0 0 0
+0 0 0 0 0 9 0 0 0
+4 0 5 0 0 0 0 0 7
+7 1 0 0 0 0 0 0 0
+0 0 3 0 5 0 0 0 8
+3 0 0 0 7 0 0 0 4
+0 0 0 0 0 1 9 0 0
+0 0 0 2 0 0 0 6 0
+
+9 0 0 6 0 0 2 0 0
+8 0 4 0 3 0 0 0 0
+0 0 0 0 0 9 0 0 0
+4 0 5 0 0 0 0 0 7
+7 1 0 0 0 0 0 0 0
+0 0 3 0 5 0 0 0 8
+3 0 0 0 7 0 0 0 4
+0 0 0 0 0 1 9 0 0
+0 0 0 2 0 0 0 6 0
+
+0 0 0 0 0 0 0 0 8
+0 2 0 0 4 0 0 0 6
+7 0 0 5 0 0 0 0 0
+5 0 0 3 0 0 0 7 0
+0 0 0 0 0 6 0 0 2
+9 0 0 0 0 0 0 0 0
+0 6 0 0 0 8 0 0 0
+0 0 0 0 0 0 0 5 0
+3 0 0 7 0 0 0 9 0
+
+0 0 0 6 0 0 2 0 0
+8 0 4 0 3 0 0 0 0
+0 0 0 0 0 9 0 0 0
+4 0 5 0 0 0 0 0 7
+7 1 0 0 0 0 0 0 0
+0 0 3 0 5 0 0 0 8
+3 0 0 0 7 0 0 0 4
+0 0 0 0 0 1 9 0 0
+0 0 0 2 0 0 0 6 0
+
+8 0 0 0 0 0 0 0 0
+0 0 3 6 0 0 0 0 0
+0 7 0 0 9 0 2 0 0
+0 5 0 0 0 7 3 0 0
+0 0 0 0 4 5 0 0 0
+0 0 0 1 0 0 0 0 0
+0 0 1 0 0 0 0 6 8
+0 0 8 5 0 0 0 1 0
+0 9 0 0 0 0 4 0 0
